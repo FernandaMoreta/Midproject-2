@@ -1,14 +1,18 @@
+//objetivo js: organizar las rutas dentro de la app 
 import { createRouter, createWebHistory } from 'vue-router'
-// Enrutador sirve para dirigir las páginas del navegador 
+//registro
 import signIn from '../components/SignIn.vue'
-import signUp from '../components/SignUp.vue'
+import signUp from '../components/SignUp.vue' 
+//panel tareas
+import Dashboard from '../pages/Dashboard.vue' 
 
 const routes = [
-    {path: '/signIn', component: signIn},
-    {path: '/signUp', component: signUp},
+    { path: '/signin', component: signIn }, 
+    { path: '/signup', component: signUp },
+    { path: '/task', component: Dashboard }, 
 ]
 
-const router = createRouter ({
+const router = createRouter({
     history: createWebHistory(),
     routes,
 })
