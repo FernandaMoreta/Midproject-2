@@ -1,12 +1,12 @@
 <template>
-  <div class="signin">
-    <h2>Iniciar sesión</h2>
+  <div class="signup">
+    <h2>Registrate</h2>
     <form @submit.prevent="login">
       <input type="email" placeholder="Email" v-model="email" />
       <input type="password" placeholder="Contraseña" v-model="password" />
-      <button type="submit">Entrar</button>
+      <input type="password" placeholder="Confirma la contraseña" v-model="password" />
+      <button type="submit">Registrate</button>
       <p v-if="errorMessage" class="error">{{ errorMessage }}</p> <!-- Mostrar mensaje de error -->
-      <p>¿No tienes cuenta? <router-link to="/signup">Regístrate</router-link></p>
     </form>
   </div>
 </template>
@@ -25,12 +25,12 @@ const router = useRouter()
 
 const login = async () => {
   errorMessage.value = '' // Reiniciar el mensaje de error
-  const { error } = await supabase.auth.signInWithPassword({
+  const { error } = await supabase.auth.signUp({
     email: email.value,
     password: password.value
   })
   if (error) {
-    errorMessage.value = 'Error al iniciar sesión' // Mostrar el mensaje de error
+    errorMessage.value = 'Error al registrarse' // Mostrar el mensaje de error
   } else {
     router.push('/')
 }

@@ -1,11 +1,15 @@
 <template>
   <div id="app">
-    <h1>To do App </h1>
+    <h1>To do App prueba</h1>
+    <button @click="$router.push('/signin')">Iniciar sesión</button>
+    <button @click="$router.push('/signup')">Registrarse</button> 
+    <router-view></router-view>
   </div>
+  
 </template>
-
 <script>
 export default {
+
 
 }
 </script>
