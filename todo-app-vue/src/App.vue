@@ -1,19 +1,16 @@
-<template>
-  <div id="app">
-    <h1>To do App prueba</h1>
-    <button @click="$router.push('/signin')">Iniciar sesión</button>
-    <button @click="$router.push('/signup')">Registrarse</button> 
-    <button @click="$router.push('/task')">Tareas</button>
-    <router-view></router-view>
-  </div>
-  
-</template>
 <script>
 export default {
 
 
 }
 </script>
+<template>
+  <div id="app">
+    <h1>To Do FM App </h1>
+    <router-view></router-view>
+  </div>
+  
+</template>
 
 <style>
 

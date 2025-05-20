@@ -1,15 +1,3 @@
-<template>
-  <div class="signin">
-    <h2>Iniciar sesión</h2>
-    <form @submit.prevent="login">
-      <input type="email" placeholder="Email" v-model="email" />
-      <input type="password" placeholder="Contraseña" v-model="password" />
-      <button type="submit">Entrar</button>
-      <p v-if="errorMessage" class="error">{{ errorMessage }}</p> 
-      <p>¿No tienes cuenta? <router-link to="/signup">Regístrate</router-link></p>
-    </form>
-  </div>
-</template>
 
 <script setup>
 // Este componente permite a los usuarios iniciar sesión en la aplicación
@@ -35,6 +23,19 @@ const login = async () => {
 }
 }
 </script>
+
+<template>
+  <div class="signin">
+    <h2>Iniciar sesión</h2>
+    <form @submit.prevent="login">
+      <input type="email" placeholder="Email" v-model="email" />
+      <input type="password" placeholder="Contraseña" v-model="password" />
+      <button type="submit">Entrar</button>
+      <p v-if="errorMessage" class="error">{{ errorMessage }}</p> 
+      <p>¿No tienes cuenta? <router-link to="/signup">Regístrate</router-link></p>
+    </form>
+  </div>
+</template>
 
 <style>
 
