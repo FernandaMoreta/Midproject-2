@@ -14,6 +14,6 @@ const taskStore = useTaskStore()
 // Almacena las tareas en el store
 onMounted(() => taskStore.fetchTasks())
 
-// Creamos una propiedad computada para acceder a las tareas reactivamente que permite que la vista se actualice automáticamente cuando cambian las tareas
+// Creamos una propiedad computada con el objetvio de actualizar automáticamente las tareas cuando se interactua con ellas
 const tasks = computed(() => taskStore.tasks)
 </script>

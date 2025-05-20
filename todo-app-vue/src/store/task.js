@@ -1,4 +1,4 @@
-//Este js tiene la logica de vincular la tabla "tasks" de supabase con la información de interacción de cada ususario que esta autenticado
+//Js de vinculación entre la tabla "tasks" de supabase y la interacción en la app de cada ususario que esta autenticado
 import { defineStore } from 'pinia'
 import { supabase } from '../supabase.js'
 
@@ -6,8 +6,8 @@ export const useTaskStore = defineStore('tasks', {
   state: () => ({
     tasks: [],
   }),
-  actions: { // cada accion tiene un mensaje para que el usuario sepa si hay algun error al interactuar con la app
-    //fetchTasks obtiene el registro de las tareas del usuario
+  actions: { // cada accion tiene un mensaje para que el usuario sepa si hay algun error al interactuar con la app y mantiene el mismo esquema en cada acción
+    //fetchTasks obtiene el registro de las tareas del usuario creadas
     async fetchTasks() {
       const {data: userData} = await supabase.auth.getUser()
       const { data, error } = await supabase
@@ -36,6 +36,7 @@ export const useTaskStore = defineStore('tasks', {
         this.fetchTasks()
       }
     },
+    //toggleTask permite que el usuario marque la tarea como hecha o no
     async toggleTask(task) {
       const { error } = await supabase
         .from('tasks')
