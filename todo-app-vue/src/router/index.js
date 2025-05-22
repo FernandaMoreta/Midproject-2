@@ -1,16 +1,18 @@
 //objetivo js: organizar las rutas dentro de la app 
 import { createRouter, createWebHistory } from 'vue-router'
 //registro
+import Home from '../pages/Home.vue'
 import Auth from '../pages/Auth.vue'
-import signIn from '../components/SignIn.vue'
-import signUp from '../components/SignUp.vue' 
+import SignIn from '../components/SignIn.vue'
+import SignUp from '../components/SignUp.vue' 
 //panel tareas
 import Dashboard from '../pages/Dashboard.vue' 
 
 const routes = [
-    {path: '/autentication', component: Auth},
-    { path: '/signin', component: signIn }, 
-    { path: '/signup', component: signUp },
+    {path: '/', component: Home },
+    { path: '/autentication', component: Auth },
+    { path: '/signin', component: SignIn }, 
+    { path: '/signup', component: SignUp },
     { path: '/task', component: Dashboard }, 
 ]
 

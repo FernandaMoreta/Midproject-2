@@ -1,5 +1,5 @@
 <script setup>
-//LOGICA PARA REGISTRARSE
+// REGISTRARSE
 // Este componente permite a los usuarios Registrarse en la aplicación.
 import { ref } from 'vue'
 import { supabase } from '../supabase.js'
@@ -11,16 +11,21 @@ const password = ref('')
 const errorMessage = ref('') // Variable para almacenar el mensaje de error
 const router = useRouter()
 
-const login = async () => {
+const signUp = async () => {
   errorMessage.value = '' // Reiniciar el mensaje de error
   const { error } = await supabase.auth.signUp({
-    username: user.value,
     email: email.value,
-    password: password.value
+    password: password.value,
+    options: {
+      data: {
+        username: user.value
+      }
+    }
   })
   if (error) {
     errorMessage.value = 'Error al registrarse' // Mostrar el mensaje de error
   } else {
+    alert('Registro exitoso!') 
     router.push('/')
 }
 }
@@ -29,8 +34,8 @@ const login = async () => {
 <template>
   <div class="signup">
     <h2>Registrate</h2>
-    <form @submit.prevent="login">
-      <input type="text" placeholder="Nombre de usuario" v-model="name" />
+    <form @submit.prevent="signUp">
+      <input type="text" placeholder="Nombre de usuario" v-model="user" />
       <input type="email" placeholder="Email" v-model="email" />
       <input type="password" placeholder="Contraseña" v-model="password" />
       <button type="submit">Registrate</button>
