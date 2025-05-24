@@ -12,12 +12,12 @@ const router = useRouter()
 
 const login = async () => {
   errorMessage.value = '' // Reiniciar el mensaje de error
-  const { error } = await supabase.auth.signInWithPassword({
+  const { data, error } = await supabase.auth.signInWithPassword({
     email: email.value,
     password: password.value
   })
   if (error) {
-    errorMessage.value = 'Error al iniciar sesión' // Mostrar el mensaje de error
+    errorMessage.value = error.message 
   } else {
     router.push('/')
 }
