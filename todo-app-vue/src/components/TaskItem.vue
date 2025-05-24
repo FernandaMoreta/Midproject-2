@@ -41,7 +41,7 @@ const tasks = computed(() => taskStore.tasks)
         <span :style="{ textDecoration: task.completed ? 'line-through' : 'none' }">
           {{ task.title }}
         </span>
-        <button @click="remove(task.id)">🗑️</button>
+        <button @click="remove(task.id)">borrar</button>
       </li>
     </ul>
   </div>

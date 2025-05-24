@@ -6,8 +6,8 @@ export const useTaskStore = defineStore('tasks', {
   state: () => ({
     tasks: [],
   }),
-  actions: { // cada accion tiene un mensaje para que el usuario sepa si hay algun error al interactuar con la app y mantiene el mismo esquema en cada acción
-    //fetchTasks obtiene el registro de las tareas del usuario creadas
+  actions: { // OBJETIVO eventos con los que puede interactuar el usuario con las tareas
+    //fetchTasks registro del historial de la interación del usuario con las tareas
     async fetchTasks() {
       const {data: userData} = await supabase.auth.getUser()
       const { data, error } = await supabase
@@ -36,7 +36,7 @@ export const useTaskStore = defineStore('tasks', {
         this.fetchTasks()
       }
     },
-    //toggleTask permite que el usuario marque la tarea como hecha o no
+    //uso del toggle para marcar las tareas como completadas o no
     async toggleTask(task) {
       const { error } = await supabase
         .from('tasks')

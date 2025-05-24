@@ -26,13 +26,11 @@ router.beforeEach(async (to, from, next) => {
   const { data: { user } } = await supabase.auth.getUser()
 
   if (to.meta.requiresAuth && !user) {
-    // Si la ruta requiere auth y NO hay usuario, redirige a la página de inicio
     next('/home')
   } else if ((to.path === '/signin' || to.path === '/') && user) {
-    // Si está en signin o home y hay usuario, redirige a dashboard
     next('/dashboard')
   } else {
-    next() // Deja pasar
+    next() 
   }
 })
 

@@ -9,9 +9,10 @@ const taskStore = useTaskStore()
 // Almacena las tareas en el store
 onMounted(() => taskStore.fetchTasks())
 
-// Creamos una propiedad computada con el objetvio de actualizar automáticamente las tareas cuando se interactua con ellas
+// COMPUTED propiedad para acceder a las tareas del store automáticamente
 const tasks = computed(() => taskStore.tasks)
 </script>
+
 <!--Dashboard de la aplicación, donde se muestran las tareas.-->
 <template>
   <div>
