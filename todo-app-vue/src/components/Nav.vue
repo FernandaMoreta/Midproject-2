@@ -31,20 +31,18 @@ const logout = async () => {
 
 <template>
   <div nav-bar>
-    <nav class="nav">
+    <nav class="nav" v-if="!isLoggedIn">
         <ul>
+            <!-- Solo se muestra si el usuario no está logueado -->
             <li><router-link to="/">Home</router-link></li>
-            <!-- Solo se muestra si el usuario está logueado -->
-            <li><router-link v-if="!isLoggedIn" to="/signin">Iniciar sesión</router-link></li>
-            <li><router-link v-if="!isLoggedIn" to="/signup">Registrarse</router-link></li>
+            <li><router-link to="/signup">Registrarse</router-link></li>
+            <li><router-link to="/signin">Iniciar sesión</router-link></li>
         </ul>
-    
+     </nav>
 
     <!-- Solo se muestra si el usuario está logueado -->
     <button v-if="isLoggedIn" @click="logout">Cerrar sesión</button>
     <h1 v-if="userEmail">Bienvenido {{ userEmail }}</h1>
-
-  </nav>
 
   </div>
   
