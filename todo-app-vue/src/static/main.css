@@ -1,0 +1,40 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: "Ancizar serif", sans-serif;
+    font-size: 14px;
+    background-color: beige;
+    color: #242424;
+}
+
+ul {
+    list-style: none;
+}
+
+h1 {
+    font-size: 4em;
+    font-weight: bold;
+}
+
+h2 {
+    font-size: 5.5em;
+    font-weight: bold;
+}
+
+h3 {
+    font-size: 2em;
+    font-weight: bold;
+}
+
+button {
+    color: #FFFFFF;
+    background-color: #191919;
+    width: 120px;
+    height: 40px;
+    border-radius: 50px;
+
+}

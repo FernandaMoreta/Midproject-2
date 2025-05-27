@@ -13,7 +13,7 @@ export const useTaskStore = defineStore('tasks', {
       const { data, error } = await supabase
         .from('tasks')
         .select('id, title, completed, created_at')
-        .eq('user_id', userData.user.id)
+        .eq('user_id', userData.user.id) // filtro 
         .order('created_at', { ascending: false })
     if (error) {
         console.error('Error al obtener tareas, error')
