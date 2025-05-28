@@ -3,6 +3,7 @@
 import { ref, onMounted } from 'vue'
 import { supabase } from '../supabase'
 import { useRouter } from 'vue-router'
+import logo from '../assets/logo.png'
 
 const router = useRouter()
 const userEmail = ref('')
@@ -27,10 +28,9 @@ const logout = async () => {
 </script>
 
 
-
-
 <template>
-  <div nav-bar>
+  <div class="nav-bar">
+    <img :src="logo" alt="Logo" width="50" height="50">
     <nav class="nav" v-if="!isLoggedIn">
         <ul>
             <!-- Solo se muestra si el usuario no está logueado -->
@@ -38,16 +38,46 @@ const logout = async () => {
             <li><router-link to="/signup">Registrarse</router-link></li>
             <li><router-link to="/signin">Iniciar sesión</router-link></li>
         </ul>
-     </nav>
-
-    <!-- Solo se muestra si el usuario está logueado -->
+  
+    </nav>
     <button v-if="isLoggedIn" @click="logout">Cerrar sesión</button>
-    <h1 v-if="userEmail">Bienvenido {{ userEmail }}</h1>
 
   </div>
   
 </template>
 
-<style>
+<style scoped>
+.nav-bar {
+  display: flex;
+  justify-content: space-between;
+  padding: 20px;
+}
+.nav {
+  display: flex;
+}
+.nav ul {
+  list-style: none;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
+  padding: 0;
+}
 
+.nav li {
+  margin: 0;
+}
+
+.nav a {
+  text-decoration: none;
+  color: #333;
+  font-weight: bold;
+}
+
+
+.logged-in {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
 </style>
