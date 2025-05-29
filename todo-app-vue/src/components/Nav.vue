@@ -1,30 +1,32 @@
 
 <script setup>
-import { ref, onMounted } from 'vue'
-import { supabase } from '../supabase'
+import { onMounted, computed } from 'vue'
 import { useRouter } from 'vue-router'
+import {useUserStore} from '../store/user.js'
 import logo from '../assets/logo.png'
 
 const router = useRouter()
-const userEmail = ref('')
-const isLoggedIn = ref(false)
+const userStore = useUserStore()
+const goToAuth = () => {
+  router.push('/auth')
+}
 //primero confirmamos si ha inciciado sesión o no, y luego mostramos el email del usuario
 onMounted(async () => {
-  const { data } = await supabase.auth.getSession()
-  isLoggedIn.value = !!data.session
-  userEmail.value = data.session?.user?.email || ''
-
-//cuando el estado de autenticación cambia, actualizamos las variables
-  supabase.auth.onAuthStateChange((_event, session) => {
-    isLoggedIn.value = !!session
-    userEmail.value = session?.user?.email || ''
-  })
+  await userStore.fetchUser()
 })
-// Función para cerrar sesión
+
+const isLoggedIn = computed(() => !!userStore.user)
+const userEmail = computed(() => userStore.user?.email || '')
+
 const logout = async () => {
-  await supabase.auth.signOut()
-  router.push('/signin')
+  try {
+    await userStore.signOut()
+    router.push('/')
+ } catch (error) {
+    errorMessage.value = error.message
+  }
 }
+
 </script>
 
 
@@ -35,13 +37,17 @@ const logout = async () => {
         <ul>
             <!-- Solo se muestra si el usuario no está logueado -->
             <li><router-link to="/">Home</router-link></li>
-            <li><router-link to="/signup">Registrarse</router-link></li>
-            <li><router-link to="/signin">Iniciar sesión</router-link></li>
-        </ul>
-  
+            <li><router-link to="/contactanos">Contáctanos!</router-link></li>
+            <li><router-link to="/sobre-nosotros">Sobre Nosotros</router-link></li>
+            <li v-if="!isLoggedIn.value"><router-link to="/signin">Iniciar sesión</router-link></li>
+            <button @click="goToAuth" >Comienza Ya!</button>
+          </ul>
     </nav>
-    <button v-if="isLoggedIn" @click="logout">Cerrar sesión</button>
 
+    <div v-else class="logged-in">
+      <span>Bienvenido, {{ userEmail }}</span>
+      <button @click="logout">Cerrar sesión</button>
+    </div>
   </div>
   
 </template>
