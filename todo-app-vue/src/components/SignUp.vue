@@ -1,36 +1,38 @@
 <script setup>
 // REGISTRARSE
 import { ref } from 'vue'
-import { supabase } from '../supabase.js'
 import { useRouter } from 'vue-router'
-// iteracíon entre el usuario y la base de datos de supabase
+import {useUserStore} from '../store/user.js'
+
 const email = ref('')
 const password = ref('')
 const errorMessage = ref('') 
 const router = useRouter()
+const userStore = useUserStore()
+const confirmPassword = ref('') 
 
-const signUp = async () => {
-  errorMessage.value = '' 
-  const { error } = await supabase.auth.signUp({
-    email: email.value,
-    password: password.value,
-
-  })
-  if (error) {
-    errorMessage.value = 'Error al registrarse' 
-  } else {
-    alert('Registro exitoso!') 
+const handleSingIn = async () => {
+  if (password.value !== confirmPassword.value) {
+    errorMessage.value = 'Las contraseñas no coinciden'
+    return
+  }
+  try {
+    await userStore.signUp(email.value, password.value)
     router.push('/')
-}
+  } catch (error) {
+    errorMessage.value = error.message
+  }
 }
 </script>
 
 <template>
   <div class="signup">
     <h2>Registrate</h2>
-    <form @submit.prevent="signUp">
+    <form @submit.prevent="handleSingIn">
       <input type="email" placeholder="Email" v-model="email" />
       <input type="password" placeholder="Contraseña" v-model="password" />
+      <input type="password" placeholder="Confirmar Contraseña" v-model="confirmPassword" />
+      <p>¿Ya tienes cuenta? <router-link to="/signin">Inicia sesión</router-link></p>
       <button type="submit">Registrate</button>
       <p v-if="errorMessage" class="error">{{ errorMessage }}</p> <!-- Mostrar mensaje de error -->
     </form>
