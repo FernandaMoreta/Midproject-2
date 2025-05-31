@@ -36,5 +36,27 @@ button {
     width: 120px;
     height: 40px;
     border-radius: 50px;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0s ease;
+    outline: none;
+}
 
+button:hover {
+    background-color: green;
+}
+
+button:active button:focus {
+    background-color: green;
+    outline: none;
+    box-shadow: none;
+}
+
+a {
+    text-decoration: none;
+    color: green;
+}
+
+a:hover {
+    text-decoration: underline;
 }

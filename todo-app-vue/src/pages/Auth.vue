@@ -9,10 +9,38 @@ import SignUp from '../components/SignUp.vue'
 <!--Page que centraliza los formularios de inicio y registro (Con la idea de hacer una ventana flotante en el futuro)-->
 <template>
   <div class="auth">
-    <h1>Únete!</h1>
-    <router-link to="/signin" class="btn-auth">Iniciar sesión</router-link>
-    <router-link to="/signup" class="btn-auth">Registrarse</router-link>
-   
+    <div class= "container">
+      <div class= "title">
+        <h1>ToDo App</h1>
+        <h3>Regístrate para continuar</h3>
+      </div>
+      <SignUp />
+    </div>
   </div>
 </template>
+
+<style scoped>
+.auth {
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+.container {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-around;
+  padding: 20px;
+}
+.title {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+}
+</style>
 

@@ -27,7 +27,6 @@ const handleSingIn = async () => {
 
 <template>
   <div class="signup">
-    <h2>Registrate</h2>
     <form @submit.prevent="handleSingIn">
       <input type="email" placeholder="Email" v-model="email" />
       <input type="password" placeholder="Contraseña" v-model="password" />
@@ -39,6 +38,41 @@ const handleSingIn = async () => {
   </div>
 </template>
 
-<style>
+<style scoped>
+.signup {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-top: 40px;
+}
+.signup form {
+  width: 100%;
+  max-width: 400px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.signup input {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+.signup p {
+  margin: 10px 0;
+}
+.error {
+  color: red;
+  font-size: 0.9em;
+}
+
+button {
+  width: 100%;
+ 
+}
+
 
 </style>
