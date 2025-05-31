@@ -32,16 +32,18 @@ const logout = async () => {
 
 <template>
   <div class="nav-bar">
-    <img :src="logo" alt="Logo" width="50" height="50">
+    <router-link to="/">
+      <img :src="logo" alt="Logo" width="50" height="50" class="logo" />
+    </router-link>    
     <nav class="nav" v-if="!isLoggedIn">
-        <ul>
-            <!-- Solo se muestra si el usuario no está logueado -->
-            <li><router-link to="/">Home</router-link></li>
-            <li><router-link to="/contactanos">Contáctanos!</router-link></li>
-            <li><router-link to="/sobre-nosotros">Sobre Nosotros</router-link></li>
-            <li v-if="!isLoggedIn.value"><router-link to="/signin">Iniciar sesión</router-link></li>
-            <button @click="goToAuth" >Comienza Ya!</button>
-          </ul>
+      <ul>
+        <!-- Solo se muestra si el usuario no está logueado -->
+        <li><router-link to="/">Home</router-link></li>
+        <li><router-link to="/contactanos">Contáctanos!</router-link></li>
+        <li><router-link to="/sobre-nosotros">Sobre Nosotros</router-link></li>
+        <li v-if="!isLoggedIn.value"><router-link to="/signin" class="login">Iniciar sesión</router-link></li>
+        <button @click="goToAuth" >Únete</button>
+      </ul>
     </nav>
 
     <div v-else class="logged-in">
@@ -54,9 +56,15 @@ const logout = async () => {
 
 <style scoped>
 .nav-bar {
+  width: 100%;
   display: flex;
   justify-content: space-between;
   padding: 20px;
+  position: fixed;
+  top: 0;
+  border-bottom: 1px solid black;
+
+
 }
 .nav {
   display: flex;
@@ -72,6 +80,7 @@ const logout = async () => {
 
 .nav li {
   margin: 0;
+  display: none;
 }
 
 .nav a {
@@ -86,4 +95,6 @@ const logout = async () => {
   flex-direction: column;
   align-items: flex-start;
 }
+
+
 </style>
