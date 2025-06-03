@@ -7,18 +7,16 @@ const newTask = ref('')
 
 const add = () => {
   if (newTask.value.trim() !== '') {
+    console.log('Agregando tarea con título:', newTask.value)
     taskStore.addTask({
       title: newTask.value,
       completed: false,
-      inProgress: false
+      in_progress: false,
     })
-    newTask.value = '' // Limpiar el campo de entrada después de agregar la tarea
+    newTask.value = '' // Limpiar input
   }
 }
 
-const toggle = (task) => {
-  taskStore.toggleTask(task)
-}
 const deleteTask = (taskId) => {
   taskStore.deleteTask(taskId)
 }
@@ -28,7 +26,7 @@ const setInProgress = (task) => {
 const completeTask = (task) => {
   taskStore.completeTask(task)
 }
-// Almacena las tareas en el task store
+
 onMounted(() => {
   taskStore.fetchTasks()
 })
@@ -46,23 +44,39 @@ const tasks = computed(() => taskStore.tasks)
     <div class="columns">
       <div class="column">
         <h3>Pendientes</h3>
-        <div v-for="task in tasks.filter(t => !t.completed && !t.inProgress)" :key="task.id" class="task-card">
+        <div
+          v-for="task in tasks.filter(t => !t.completed && !t.in_progress)"
+          :key="task.id"
+          class="task-card"
+        >
           {{ task.title }}
           <button @click="setInProgress(task)">↪ En progreso</button>
+          <button @click="deleteTask(task.id)">🗑 Borrar</button>
+
         </div>
       </div>
 
       <div class="column">
         <h3>En Progreso</h3>
-        <div v-for="task in tasks.filter(t => t.inProgress && !t.completed)" :key="task.id" class="task-card">
+        <div
+          v-for="task in tasks.filter(t => t.in_progress && !t.completed)"
+          :key="task.id"
+          class="task-card"
+        >
           {{ task.title }}
           <button @click="completeTask(task)">✅ Completar</button>
+          <button @click="deleteTask(task.id)">🗑 Borrar</button>
+
         </div>
       </div>
 
       <div class="column">
         <h3>Completadas</h3>
-        <div v-for="task in tasks.filter(t => t.completed)" :key="task.id" class="task-card completed">
+        <div
+          v-for="task in tasks.filter(t => t.completed)"
+          :key="task.id"
+          class="task-card completed"
+        >
           {{ task.title }}
           <button @click="deleteTask(task.id)">🗑 Borrar</button>
         </div>

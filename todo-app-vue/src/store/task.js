@@ -6,49 +6,45 @@ export const useTaskStore = defineStore('tasks', {
   state: () => ({
     tasks: [],
   }),
-  actions: { // OBJETIVO eventos con los que puede interactuar el usuario con las tareas
-    //fetchTasks registro del historial de la interación del usuario con las tareas
+  actions: {
     async fetchTasks() {
-      const {data: userData} = await supabase.auth.getUser()
+      const { data: userData } = await supabase.auth.getUser()
       const { data, error } = await supabase
         .from('tasks')
-        .select('id, title, completed, created_at')
-        .eq('user_id', userData.user.id) // filtro 
+        .select('id, title, completed, in_progress, user_id, created_at')
+        .eq('user_id', userData.user.id)
         .order('created_at', { ascending: false })
-    if (error) {
-        console.error('Error al obtener tareas, error')
-    }
-      this.tasks = data || []
-    },
-    async addTask(taskData) {
-      const { data: userData } = await supabase.auth.getUser()
-      const { error } = await supabase.from('tasks').insert([
-    {
-      title: taskData.title,
-      completed: taskData.completed,
-      inProgress: taskData.inProgress,
-      user_id: userData.user.id
-    }
-  ])
-  if (error) {
-    console.error('Error al agregar tarea:', error)
-    alert('No se pudo agregar la tarea: ' + error.message)
-  } else {
-    this.fetchTasks()
-      }
-    },
-    //uso del toggle para marcar las tareas como completadas o no
-    async toggleTask(task) {
-      const { error } = await supabase
-        .from('tasks')
-        .update({ completed: !task.completed })
-        .eq('id', task.id)
 
       if (error) {
-        console.error('Error al actualizar tarea:', error)
-        alert('No se pudo actualizar la tarea: ' + error.message)
+        console.error('Error al obtener tareas:', error)
       } else {
-        this.fetchTasks()
+        console.log('Tareas actualizadas:', data)
+        this.tasks = data || []
+      }
+    },
+
+    async addTask(taskData) {
+      console.log('addTask recibido:', taskData)
+      if (typeof taskData.title !== 'string') {
+        console.warn('El título de la tarea no es string:', taskData.title)
+        // Aquí forzamos que sea string para evitar problemas
+        taskData.title = String(taskData.title)
+      }
+      const { data: userData } = await supabase.auth.getUser()
+      const { data, error } = await supabase.from('tasks').insert([
+        {
+          title: taskData.title,
+          completed: taskData.completed,
+          in_progress: taskData.in_progress,
+          user_id: userData.user.id,
+        },
+      ]).select()
+
+      if (error) {
+        console.error('Error al agregar tarea:', error)
+        alert('No se pudo agregar la tarea: ' + error.message)
+      } else {
+        this.tasks.push(...data)
       }
     },
 
@@ -59,36 +55,49 @@ export const useTaskStore = defineStore('tasks', {
         console.error('Error al borrar tarea:', error)
         alert('No se pudo borrar la tarea: ' + error.message)
       } else {
-        this.fetchTasks()
+        this.tasks = this.tasks.filter(task => task.id !== id)
       }
     },
 
     async setInProgress(task) {
+      console.log('setInProgress recibido:', task.id)
+
       const { error } = await supabase
         .from('tasks')
-        .update({ inProgress: true })
+        .update({ in_progress: true })
         .eq('id', task.id)
 
       if (error) {
         console.error('Error al actualizar tarea:', error)
         alert('No se pudo actualizar la tarea: ' + error.message)
       } else {
-        this.fetchTasks()
+        console.log('Tarea actualizada a in_progress:')
+
+        const currentTask = this.tasks.find(t => t.id === task.id)
+
+        if (currentTask) {
+          currentTask.in_progress = true;
+        }
       }
     },
-    async completeTask(task) {
-      const { error } = await supabase
-        .from('tasks')
-        .update({ completed: true, inProgress: false })
-        .eq('id', task.id)
 
+    async completeTask(task) {
+      const { data, error } = await supabase
+        .from('tasks')
+        .update({ completed: true, in_progress: false })
+        .eq('id', task.id)
+        .select('*')
       if (error) {
         console.error('Error al completar tarea:', error)
         alert('No se pudo completar la tarea: ' + error.message)
       } else {
-        this.fetchTasks()      
-      }
-    }
-  }
-})
+        console.log('Tarea completada:', data)
+        const currentTask = this.tasks.find(t => t.id === task.id)
 
+        if (currentTask) {
+          currentTask.completed = true;
+        }
+      }
+    },
+  },
+})
