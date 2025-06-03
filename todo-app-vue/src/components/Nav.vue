@@ -60,8 +60,7 @@ const logout = async () => {
   display: flex;
   justify-content: space-between;
   padding: 20px;
-  position: fixed;
-  top: 0;
+
   border-bottom: 1px solid black;
 
 

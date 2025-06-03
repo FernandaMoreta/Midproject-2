@@ -20,20 +20,21 @@ export const useTaskStore = defineStore('tasks', {
     }
       this.tasks = data || []
     },
-    async addTask(title) {
-        const { data: userData } = await supabase.auth.getUser()
-        const { error } = await supabase.from('tasks').insert([
-        {
-        title,
-        completed: false,
-        user_id: userData.user.id
-      }
-    ])
-      if (error) {
-        console.error('Error al agregar tarea:', error)
-        alert('No se pudo agregar la tarea: ' + error.message)
-      } else {
-        this.fetchTasks()
+    async addTask(taskData) {
+      const { data: userData } = await supabase.auth.getUser()
+      const { error } = await supabase.from('tasks').insert([
+    {
+      title: taskData.title,
+      completed: taskData.completed,
+      inProgress: taskData.inProgress,
+      user_id: userData.user.id
+    }
+  ])
+  if (error) {
+    console.error('Error al agregar tarea:', error)
+    alert('No se pudo agregar la tarea: ' + error.message)
+  } else {
+    this.fetchTasks()
       }
     },
     //uso del toggle para marcar las tareas como completadas o no
@@ -60,6 +61,34 @@ export const useTaskStore = defineStore('tasks', {
       } else {
         this.fetchTasks()
       }
+    },
+
+    async setInProgress(task) {
+      const { error } = await supabase
+        .from('tasks')
+        .update({ inProgress: true })
+        .eq('id', task.id)
+
+      if (error) {
+        console.error('Error al actualizar tarea:', error)
+        alert('No se pudo actualizar la tarea: ' + error.message)
+      } else {
+        this.fetchTasks()
+      }
+    },
+    async completeTask(task) {
+      const { error } = await supabase
+        .from('tasks')
+        .update({ completed: true, inProgress: false })
+        .eq('id', task.id)
+
+      if (error) {
+        console.error('Error al completar tarea:', error)
+        alert('No se pudo completar la tarea: ' + error.message)
+      } else {
+        this.fetchTasks()      
+      }
     }
   }
 })
+
