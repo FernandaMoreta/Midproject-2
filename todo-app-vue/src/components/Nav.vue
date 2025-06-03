@@ -1,14 +1,17 @@
 
 <script setup>
 import { onMounted, computed } from 'vue'
-import { useRouter } from 'vue-router'
+import { useRouter, useRoute } from 'vue-router'
 import {useUserStore} from '../store/user.js'
 import logo from '../assets/logo.png'
 
 const router = useRouter()
+const route = useRoute()
 const userStore = useUserStore()
+
+const isAuthRoute = computed(() => route.path.startsWith('/auth'))
 const goToAuth = () => {
-  router.push('/auth')
+  router.push(isAuthRoute ? '/' : '/auth/signup')
 }
 //primero confirmamos si ha inciciado sesión o no, y luego mostramos el email del usuario
 onMounted(async () => {
@@ -32,17 +35,15 @@ const logout = async () => {
 
 <template>
   <div class="nav-bar">
-    <router-link to="/">
-      <img :src="logo" alt="Logo" width="50" height="50" class="logo" />
-    </router-link>    
+    <img :src="logo" alt="Logo" width="50" height="50" class="logo" />
     <nav class="nav" v-if="!isLoggedIn">
       <ul>
         <!-- Solo se muestra si el usuario no está logueado -->
         <li><router-link to="/">Home</router-link></li>
         <li><router-link to="/contactanos">Contáctanos!</router-link></li>
         <li><router-link to="/sobre-nosotros">Sobre Nosotros</router-link></li>
-        <li v-if="!isLoggedIn.value"><router-link to="/signin" class="login">Iniciar sesión</router-link></li>
-        <button @click="goToAuth" >Únete</button>
+        <li><router-link to="/auth/signin" class="login">Iniciar sesión</router-link></li>
+        <button @click="goToAuth" to >{{ isAuthRoute ? 'Home' : 'Únete' }}</button>
       </ul>
     </nav>
 
@@ -60,7 +61,8 @@ const logout = async () => {
   display: flex;
   justify-content: space-between;
   padding: 20px;
-
+  Position: fixed;
+  top: 0;
   border-bottom: 1px solid black;
 
 

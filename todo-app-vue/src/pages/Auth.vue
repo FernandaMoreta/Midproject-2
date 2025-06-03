@@ -1,25 +1,41 @@
-
 <script setup>
-import { ref } from 'vue'
-import SignIn from '../components/SignIn.vue'
-import SignUp from '../components/SignUp.vue'
+import { useRoute, useRouter } from 'vue-router'
+import { computed } from 'vue'
 
+
+const route = useRoute()
+const router = useRouter()
+
+// Computa si la ruta actual es '/signup'
+const isSignUp = computed(() => route.path.endsWith('/signup'))
+
+// Cambia entre rutas /signup y /signin
+const toggleForm = () => {
+  router.push(isSignUp.value ? '/auth/signin' : '/auth/signup')
+}
 </script>
 
-<!--Page que centraliza los formularios de inicio y registro (Con la idea de hacer una ventana flotante en el futuro)-->
 <template>
   <div class="auth">
-    <div class= "container">
-      <div class= "title">
+    <div class="container">
+      <div class="title">
         <h1>ToDo App</h1>
-        <h3>Regístrate para continuar</h3>
+        <router-view />
       </div>
-      <SignUp />
+
+      <div class="switch">
+        <p v-if="isSignUp">¿Ya tienes cuenta?</p>
+        <p v-else>¿No tienes cuenta?</p>
+        <button @click="toggleForm">
+          {{ isSignUp ? 'Inicia sesión' : 'Regístrate' }}
+        </button>
+      </div>
     </div>
   </div>
 </template>
 
 <style scoped>
+
 .auth {
   width: 100%;
   height: 100vh;
@@ -30,11 +46,12 @@ import SignUp from '../components/SignUp.vue'
 }
 .container {
   width: 100%;
+  max-width: 400px;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: space-around;
-  padding: 20px;
+
 }
 .title {
   display: flex;
@@ -42,5 +59,12 @@ import SignUp from '../components/SignUp.vue'
   align-items: center;
   gap: 10px;
 }
-</style>
+.switch {
+  margin-top: 20px;
+  text-align: center;
+}
+.switch p {
+  padding-bottom: 10px;
+}
 
+</style>

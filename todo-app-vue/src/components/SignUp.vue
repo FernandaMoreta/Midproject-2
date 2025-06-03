@@ -18,7 +18,7 @@ const handleSingIn = async () => {
   }
   try {
     await userStore.signUp(email.value, password.value)
-    router.push('/')
+    router.push('/dashboard') 
   } catch (error) {
     errorMessage.value = error.message
   }
@@ -27,11 +27,11 @@ const handleSingIn = async () => {
 
 <template>
   <div class="signup">
+    <h3>Registrate para continuar!</h3>
     <form @submit.prevent="handleSingIn">
       <input type="email" placeholder="Email" v-model="email" />
       <input type="password" placeholder="Contraseña" v-model="password" />
       <input type="password" placeholder="Confirmar Contraseña" v-model="confirmPassword" />
-      <p>¿Ya tienes cuenta? <router-link to="/signin">Inicia sesión</router-link></p>
       <button type="submit">Registrate</button>
       <p v-if="errorMessage" class="error">{{ errorMessage }}</p> <!-- Mostrar mensaje de error -->
     </form>
@@ -44,11 +44,13 @@ const handleSingIn = async () => {
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding-top: 40px;
+  padding:10px
+}
+.signup h3 {
+  margin-bottom: 10px;
 }
 .signup form {
-  width: 100%;
-  max-width: 400px;
+  width: 250px;
   display: flex;
   flex-direction: column;
   gap: 20px;

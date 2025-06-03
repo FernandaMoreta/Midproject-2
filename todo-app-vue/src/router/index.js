@@ -4,6 +4,7 @@ import Home from '../pages/Home.vue'
 //autenticación
 import Auth from '../pages/Auth.vue'
 import SignIn from '../components/SignIn.vue'
+import SignUp from '../components/SignUp.vue'
 //panel tareas
 import Dashboard from '../pages/Dashboard.vue' 
 //404 
@@ -14,8 +15,16 @@ import { supabase } from '../supabase'
 
 const routes = [
     { path: '/', component: Home },
-    { path: '/auth', component: Auth, meta: { requiresGuest: true } },
-    { path: '/signin', component: SignIn,  meta: { requiresGuest: true } }, 
+    {
+    path: '/auth',
+    component: Auth,
+    meta: { requiresGuest: true },
+    children: [
+      {path: '', redirect: 'signin'},
+      {path: 'signin', component: SignIn},
+      {path: 'signup', component: SignUp},
+      ]
+    },
     { path: '/dashboard', component: Dashboard, meta: { requiresAuth: true } },//autorizacion para acceder
     { path: '/:pathMatch(.*)*', name: 'NotFound', component: NotFound }, // Ruta comodín para 404
 
@@ -31,7 +40,7 @@ router.beforeEach(async (to, from, next) => {
   const { data: { user } } = await supabase.auth.getUser()
 
   if (to.meta.requiresAuth && !user) {
-    next('/signin')
+    next('/auth/signin')
   } else if (to.meta.requiresGuest && user) {
     // Ya autenticado y quiere ir a login/register/auth
     next('/dashboard')
@@ -40,6 +49,5 @@ router.beforeEach(async (to, from, next) => {
     next()
   }
 })
-
 
 export default router
