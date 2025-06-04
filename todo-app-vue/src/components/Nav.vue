@@ -19,7 +19,6 @@ onMounted(async () => {
 })
 
 const isLoggedIn = computed(() => !!userStore.user)
-const userEmail = computed(() => userStore.user?.email || '')
 
 const logout = async () => {
   try {
@@ -48,7 +47,6 @@ const logout = async () => {
     </nav>
 
     <div v-else class="logged-in">
-      <span>Bienvenido, {{ userEmail }}</span>
       <button @click="logout">Cerrar sesión</button>
     </div>
   </div>

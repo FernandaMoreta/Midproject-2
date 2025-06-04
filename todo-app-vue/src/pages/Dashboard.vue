@@ -15,7 +15,16 @@ const tasks = computed(() => taskStore.tasks)
 
 <!--Dashboard de la aplicación, donde se muestran las tareas.-->
 <template>
-  <div>
+  <div class="dashboard">
     <TaskItem />
   </div>
 </template>
+
+<style scoped>
+.dashboard {
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+</style>

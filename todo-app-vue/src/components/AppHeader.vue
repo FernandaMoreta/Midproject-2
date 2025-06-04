@@ -7,7 +7,7 @@ import logo from '../assets/logo.png'
 <template>
     <div class="app-header">
         <div class="text-container">
-            <h1>Human engagement & peace</h1>
+            <h1>Human <br> engagement & peace</h1>
             <h3>Deja atrás la procastinación y organizate con ToDo App!</h3>
             <button @click="$router.push('/auth/signup')" class="button-header">Comienza ya!</button>
         </div>

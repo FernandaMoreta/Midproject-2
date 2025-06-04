@@ -14,7 +14,7 @@ import { supabase } from '../supabase'
 
 
 const routes = [
-    { path: '/', component: Home },
+    { path: '/', component: Home, meta:{requiresGuest: false}},
     {
     path: '/auth',
     component: Auth,
