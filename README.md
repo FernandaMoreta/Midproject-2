@@ -19,8 +19,7 @@ USO
   Agrega nuevas tareas utilizando el formulario disponible.
   Cambia el estado de las tareas entre Pendientes, En Progreso y Completadas.
   Elimina tareas que ya no sean necesarias.
-
--Interfaz Intuitiva: La aplicación presenta una interfaz clara y organizada, facilitando la gestión de tareas diarias.
+- Interfaz Intuitiva: La aplicación presenta una interfaz clara y organizada, facilitando la gestión de tareas diarias.
 
 TECNOLOGÍAS UTILIZADAS
 
@@ -30,4 +29,5 @@ TECNOLOGÍAS UTILIZADAS
 - Vite: Herramienta de desarrollo frontend rápida y moderna.
 
 CONCLUSIÓN
+
 Un proceso entretenido y muy didáctico enfocado al aprendizaje de las herramientas más básicas del FRONT-END.
