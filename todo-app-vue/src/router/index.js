@@ -1,20 +1,53 @@
 //objetivo js: organizar las rutas dentro de la app 
 import { createRouter, createWebHistory } from 'vue-router'
-//registro
-import signIn from '../components/SignIn.vue'
-import signUp from '../components/SignUp.vue' 
+import Home from '../pages/Home.vue'
+//autenticación
+import Auth from '../pages/Auth.vue'
+import SignIn from '../components/SignIn.vue'
+import SignUp from '../components/SignUp.vue'
 //panel tareas
 import Dashboard from '../pages/Dashboard.vue' 
+//404 
+import NotFound from '../pages/NotFound.vue'
+// conexion con los datos de registro de supabase
+import { supabase } from '../supabase'
+
 
 const routes = [
-    { path: '/signin', component: signIn }, 
-    { path: '/signup', component: signUp },
-    { path: '/task', component: Dashboard }, 
+    { path: '/', component: Home, meta:{requiresGuest: false}},//autorizacion para acceder
+    {
+    path: '/auth',
+    component: Auth,
+    meta: { requiresGuest: true },
+    children: [
+      {path: '', redirect: 'signin'},
+      {path: 'signin', component: SignIn},
+      {path: 'signup', component: SignUp},
+      ]
+    },
+    { path: '/dashboard', component: Dashboard, meta: { requiresAuth: true } },
+    { path: '/:pathMatch(.*)*', name: 'NotFound', component: NotFound }, 
+
 ]
 
 const router = createRouter({
     history: createWebHistory(),
     routes,
+})
+
+//Proteccion de rutas que solo se pueden acceder si el usuario esta identificado
+router.beforeEach(async (to, from, next) => {
+  const { data: { user } } = await supabase.auth.getUser()
+
+  if (to.meta.requiresAuth && !user) {
+    next('/auth/signin')
+  } else if (to.meta.requiresGuest && user) {
+    // Ya autenticado y quiere ir a login/register/auth
+    next('/dashboard')
+  } else {
+    // Todo bien
+    next()
+  }
 })
 
 export default router

@@ -1,9 +1,4 @@
-<!--Dashboard de la aplicación, donde se muestran las tareas.-->
-<template>
-  <div>
-    <TaskItem />
-  </div>
-</template>
+
 
 <script setup>
 import TaskItem from '../components/TaskItem.vue'
@@ -14,6 +9,31 @@ const taskStore = useTaskStore()
 // Almacena las tareas en el store
 onMounted(() => taskStore.fetchTasks())
 
-// Creamos una propiedad computada con el objetvio de actualizar automáticamente las tareas cuando se interactua con ellas
+// COMPUTED propiedad para acceder a las tareas del store automáticamente
 const tasks = computed(() => taskStore.tasks)
+const userEmail = computed(() => taskStore.userEmail)
 </script>
+
+<!--Dashboard de la aplicación, donde se muestran las tareas.-->
+<template>
+  <div class="dashboard">
+    <p>Bienvenido, <br> {{ userEmail }}</p>
+    <TaskItem />
+  </div>
+</template>
+
+<style scoped>
+.dashboard {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.dashboard p  {
+  width: 100%;
+  font-size: 1.5rem;
+  padding: 1rem;
+  font-weight: bold;
+}
+</style>

@@ -1,42 +1,80 @@
+<script setup>
+// REGISTRARSE
+import { ref } from 'vue'
+import { useRouter } from 'vue-router'
+import {useUserStore} from '../store/user.js'
+
+const email = ref('')
+const password = ref('')
+const errorMessage = ref('') 
+const router = useRouter()
+const userStore = useUserStore()
+const confirmPassword = ref('') 
+
+const handleSingIn = async () => {
+  if (password.value !== confirmPassword.value) {
+    errorMessage.value = 'Las contraseñas no coinciden'
+    return
+  }
+  try {
+    await userStore.signUp(email.value, password.value)
+    router.push('/dashboard') 
+  } catch (error) {
+    errorMessage.value = error.message
+  }
+}
+</script>
+
 <template>
   <div class="signup">
-    <h2>Registrate</h2>
-    <form @submit.prevent="login">
+    <h3>Registrate para continuar!</h3>
+    <form @submit.prevent="handleSingIn">
       <input type="email" placeholder="Email" v-model="email" />
       <input type="password" placeholder="Contraseña" v-model="password" />
-      <input type="password" placeholder="Confirma la contraseña" v-model="password" />
+      <input type="password" placeholder="Confirmar Contraseña" v-model="confirmPassword" />
       <button type="submit">Registrate</button>
       <p v-if="errorMessage" class="error">{{ errorMessage }}</p> <!-- Mostrar mensaje de error -->
     </form>
   </div>
 </template>
 
-<script setup>
-//LOGICA PARA INICIAR SESION
-// Este componente permite a los usuarios iniciar sesión en la aplicación
-import { ref } from 'vue'
-import { supabase } from '../supabase.js'
-import { useRouter } from 'vue-router'
-// iteracíon entre el usuario y la base de datos de supabase
-const email = ref('')
-const password = ref('')
-const errorMessage = ref('') // Variable para almacenar el mensaje de error
-const router = useRouter()
-
-const login = async () => {
-  errorMessage.value = '' // Reiniciar el mensaje de error
-  const { error } = await supabase.auth.signUp({
-    email: email.value,
-    password: password.value
-  })
-  if (error) {
-    errorMessage.value = 'Error al registrarse' // Mostrar el mensaje de error
-  } else {
-    router.push('/')
+<style scoped>
+.signup {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding:10px
 }
+.signup h3 {
+  margin-bottom: 10px;
 }
-</script>
+.signup form {
+  width: 250px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
 
-<style>
+.signup input {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+.signup p {
+  margin: 10px 0;
+}
+.error {
+  color: red;
+  font-size: 0.9em;
+}
+
+button {
+  width: 100%;
+ 
+}
+
 
 </style>
