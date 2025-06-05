@@ -14,7 +14,7 @@ import { supabase } from '../supabase'
 
 
 const routes = [
-    { path: '/', component: Home, meta:{requiresGuest: false}},
+    { path: '/', component: Home, meta:{requiresGuest: false}},//autorizacion para acceder
     {
     path: '/auth',
     component: Auth,
@@ -25,8 +25,8 @@ const routes = [
       {path: 'signup', component: SignUp},
       ]
     },
-    { path: '/dashboard', component: Dashboard, meta: { requiresAuth: true } },//autorizacion para acceder
-    { path: '/:pathMatch(.*)*', name: 'NotFound', component: NotFound }, // Ruta comodín para 404
+    { path: '/dashboard', component: Dashboard, meta: { requiresAuth: true } },
+    { path: '/:pathMatch(.*)*', name: 'NotFound', component: NotFound }, 
 
 ]
 

@@ -80,7 +80,7 @@ export const useTaskStore = defineStore('tasks', {
         const currentTask = this.tasks.find(t => t.id === task.id)
 
         if (currentTask) {
-          currentTask.in_progress = true;
+          currentTask.in_progress = true; //currentTask tiene como objetivo llamar la tarea que se esta editando evitando tener que llamar a supabase y que revise todas las tareas para llegar a la que se esta editanto. AYUDA A QUE EL NAVEGADO TARDE MUCHO EN DEVOLVER LA INFO
         }
       }
     },

@@ -9,7 +9,7 @@ const router = useRouter()
 const route = useRoute()
 const userStore = useUserStore()
 
-const isAuthRoute = computed(() => route.path.startsWith('/auth'))
+const isAuthRoute = computed(() => route.path.startsWith('/auth')) //starts with metodo para verificar si la ruta comienza con '/auth'
 const goToAuth = () => {
   router.push(isAuthRoute ? '/' : '/auth/signup')
 }
