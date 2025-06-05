@@ -44,58 +44,52 @@ const tasks = computed(() => taskStore.tasks)
     <div class="columns">
       <div class="column">
         <h3>Pendientes</h3>
-        <div
-          v-for="task in tasks.filter(t => !t.completed && !t.in_progress)"
-          :key="task.id"
-          class="task-card"
-        >
-          {{ task.title }}
-          <button @click="setInProgress(task)">↪ En progreso</button>
-          <button @click="deleteTask(task.id)">🗑 Borrar</button>
-
+        <div v-for="task in tasks.filter(t => !t.completed && !t.in_progress)" :key="task.id" class="task-card pending">
+          <p>{{ task.title }}</p>
+          <div class="buttons">
+            <button @click="setInProgress(task)">↪ En progreso</button>
+            <button @click="deleteTask(task.id)">🗑 Borrar</button>
+          </div>
         </div>
       </div>
 
       <div class="column">
         <h3>En Progreso</h3>
-        <div
-          v-for="task in tasks.filter(t => t.in_progress && !t.completed)"
-          :key="task.id"
-          class="task-card"
-        >
-          {{ task.title }}
-          <button @click="completeTask(task)">✅ Completar</button>
-          <button @click="deleteTask(task.id)">🗑 Borrar</button>
-
+        <div v-for="task in tasks.filter(t => t.in_progress && !t.completed)" :key="task.id" class="task-card in-progress">
+          <p>{{ task.title }}</p>
+          <div class="buttons">
+            <button @click="completeTask(task)">✅ Completar</button>
+            <button @click="deleteTask(task.id)">🗑 Borrar</button>
+          </div>
         </div>
       </div>
 
       <div class="column">
         <h3>Completadas</h3>
-        <div
-          v-for="task in tasks.filter(t => t.completed)"
-          :key="task.id"
-          class="task-card completed"
-        >
-          {{ task.title }}
-          <button @click="deleteTask(task.id)">🗑 Borrar</button>
+        <div v-for="task in tasks.filter(t => t.completed)" :key="task.id" class="task-card completed">
+          <p>{{ task.title }}</p>
+          <div class="buttons"></div>
+            <button @click="deleteTask(task.id)">🗑 Borrar</button>
+          </div>
         </div>
       </div>
     </div>
-  </div>
 </template>
 
 <style scoped>
 .kanban-board {
   padding: 2rem;
+  margin: 1rem;
   max-width: 1200px;
-  margin: 0 auto;
   display: flex;
   flex-direction: column;
   justify-content: center;
   gap: 1.5rem;
-  font-family: sans-serif;
+  overflow: scroll;
+  background-color: rgb(0, 0, 0);
+
 }
+
 
 .add-task {
   display: flex;
@@ -104,63 +98,78 @@ const tasks = computed(() => taskStore.tasks)
 }
 
 .add-task input {
-  padding: 0.5rem 1rem;
-  border-radius: 8px;
+  width: 100%;
+  padding: 10px;
   border: 1px solid #ccc;
-  width: 300px;
+  border-radius: 5px;
 }
-
 .add-task button {
-  padding: 0.5rem 1rem;
-  border-radius: 8px;
-  background-color: #007bff;
-  color: white;
-  border: none;
-  cursor: pointer;
+ background-color: aliceblue;
+ color: black;
 }
 
 .columns {
+  max-height: 900px;
   display: flex;
+  flex-direction: column;
   gap: 1rem;
   justify-content: space-between;
+  overflow-y: auto;
 }
 
 .column {
   flex: 1;
-  background-color: #f4f4f4;
   padding: 1rem;
   border-radius: 8px;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
-  min-height: 300px;
+  background-color: white;
 }
 
 .column h3 {
   text-align: center;
   margin-bottom: 1rem;
+  font-weight: bold;
 }
+.task-card button {
+ width: 90px;
+ height: 30px;
 
+}
 .task-card {
-  background: white;
   padding: 0.8rem;
   margin-bottom: 1rem;
   border-radius: 6px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
   display: flex;
+  flex-direction: column;
   justify-content: space-between;
   align-items: center;
+  
+}
+.task-card p {
+  margin: 0;
+  font-size: 1.2rem;
+  font-weight: bold;
+  text-align: center;
+  text-transform: capitalize;
+}
+.buttons {
+  display: flex;
+  gap: 0.5rem;
+  justify-content: center;
+  margin-top: 0.5rem;
 }
 
-.task-card button {
-  padding: 0.3rem 0.6rem;
-  font-size: 0.8rem;
-  border-radius: 4px;
-  border: none;
-  cursor: pointer;
-  background-color: #eee;
+.task-card.pending {
+  background-color: #5bc0de;
+}
+.task-card.in-progress {
+
+  background-color: #e7e982;
 }
 
 .task-card.completed {
-  background-color: #d4edda;
+  background-color:#5cb85c;
   text-decoration: line-through;
 }
 </style>
