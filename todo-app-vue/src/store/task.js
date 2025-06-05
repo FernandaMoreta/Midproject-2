@@ -5,10 +5,14 @@ import { supabase } from '../supabase.js'
 export const useTaskStore = defineStore('tasks', {
   state: () => ({
     tasks: [],
+    userEmail: null
   }),
   actions: {
     async fetchTasks() {
       const { data: userData } = await supabase.auth.getUser()
+      if (userData && userData.user.email){
+        this.userEmail = userData.user.email
+      }
       const { data, error } = await supabase
         .from('tasks')
         .select('id, title, completed, in_progress, user_id, created_at')

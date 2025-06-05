@@ -32,6 +32,7 @@ onMounted(() => {
 })
 
 const tasks = computed(() => taskStore.tasks)
+
 </script>
 
 <template>
@@ -104,8 +105,7 @@ const tasks = computed(() => taskStore.tasks)
   border-radius: 5px;
 }
 .add-task button {
- background-color: aliceblue;
- color: black;
+ background-color: green;
 }
 
 .columns {
