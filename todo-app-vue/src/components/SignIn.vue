@@ -24,17 +24,53 @@ const handleLogin = async () => {
 
 <template>
   <div class="signin">
-    <h2>Iniciar sesión</h2>
+    <h3>Inicia Sessión</h3>
     <form @submit.prevent="handleLogin">
       <input type="email" placeholder="Email" v-model="email" />
       <input type="password" placeholder="Contraseña" v-model="password" />
       <button type="submit">Entrar</button>
       <p v-if="errorMessage" class="error">{{ errorMessage }}</p> 
-      <p>¿No tienes cuenta? <router-link to="/signup">Regístrate</router-link></p>
     </form>
   </div>
 </template>
 
-<style>
+<style scoped>
+.signin {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 10px;
+}
+.signin h3 {
+  margin-bottom: 10px;
+}
+.signin form {
+  width: 250px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.signin input {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+.signin p {
+  margin: 10px 0;
+}
+.error {
+  color: red;
+  font-size: 0.9em;
+}
+
+
+button {
+  width: 100%;
+ 
+}
 
 </style>

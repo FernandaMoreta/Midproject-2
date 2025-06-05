@@ -7,3 +7,12 @@ import AppHeader from '../components/AppHeader.vue';
         <AppHeader /> 
     </div>
 </template>
+
+<style scoped>
+.home {
+    Height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+</style>
