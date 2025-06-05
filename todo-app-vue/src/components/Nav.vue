@@ -41,7 +41,7 @@ const logout = async () => {
         <li><router-link to="/">Home</router-link></li>
         <li><router-link to="/contactanos">Contáctanos!</router-link></li>
         <li><router-link to="/sobre-nosotros">Sobre Nosotros</router-link></li>
-        <li><router-link to="/auth/signin" class="login">Iniciar sesión</router-link></li>
+        <li class="signin"><router-link to="/auth/signin" class="login">Iniciar sesión</router-link></li>
         <button @click="goToAuth" to >{{ isAuthRoute ? 'Home' : 'Únete' }}</button>
       </ul>
     </nav>
@@ -82,6 +82,7 @@ const logout = async () => {
   display: none;
 }
 
+
 .nav a {
   text-decoration: none;
   color: #333;
@@ -94,6 +95,15 @@ const logout = async () => {
   flex-direction: column;
   align-items: flex-start;
 }
+@media (min-width: 599px) and (max-width: 800px) {
+.nav li.signin {
+  display: block;
+}
+}
 
-
+@media (min-width: 801px) {
+.nav li {
+  display: block;
+}
+}
 </style>

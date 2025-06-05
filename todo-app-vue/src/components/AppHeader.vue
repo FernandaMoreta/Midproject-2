@@ -1,7 +1,6 @@
 
 <script setup>
-import logo from '../assets/logo.png'
-
+import fondo from '../assets/fondo.png'
 </script>
 
 <template>
@@ -11,8 +10,7 @@ import logo from '../assets/logo.png'
             <h3>Deja atrás la procastinación y organizate con ToDo App!</h3>
             <button @click="$router.push('/auth/signup')" class="button-header">Comienza ya!</button>
         </div>
-        <img :src="logo" alt="Logo" class="logo" />
-    
+        <img :src="fondo" alt="Fondo" class="fondo">
 
     </div>
 </template>
@@ -36,8 +34,14 @@ import logo from '../assets/logo.png'
     padding: 20px;
 
 }
-img.logo {
+img.fondo {
 display: none;
 }
-
+@media screen and (min-width: 600px) {
+    img.fondo {
+        display: block;
+        height: auto;
+    }
+    
+}
 </style>

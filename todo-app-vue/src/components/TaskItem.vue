@@ -81,6 +81,8 @@ const tasks = computed(() => taskStore.tasks)
 .kanban-board {
   padding: 2rem;
   margin: 1rem;
+  width: 100%;
+  height: 500px;
   max-width: 1200px;
   display: flex;
   flex-direction: column;
@@ -90,7 +92,6 @@ const tasks = computed(() => taskStore.tasks)
   background-color: rgb(0, 0, 0);
 
 }
-
 
 .add-task {
   display: flex;
@@ -109,6 +110,7 @@ const tasks = computed(() => taskStore.tasks)
 }
 
 .columns {
+  height: 100%;
   max-height: 900px;
   display: flex;
   flex-direction: column;
@@ -171,5 +173,18 @@ const tasks = computed(() => taskStore.tasks)
 .task-card.completed {
   background-color:#5cb85c;
   text-decoration: line-through;
+}
+@media (min-width: 800px) {
+  .kanban-board {
+    padding: 1rem;
+  }
+  .columns {
+    flex-direction: row;
+  }
+  .column {
+    flex: 1;
+    margin: 0 0.5rem;
+  }
+
 }
 </style>

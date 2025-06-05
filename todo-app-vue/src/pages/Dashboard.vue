@@ -31,8 +31,9 @@ const userEmail = computed(() => taskStore.userEmail)
   align-items: center;
 }
 .dashboard p  {
+  width: 100%;
   font-size: 1.5rem;
-  margin-bottom: 1rem;
+  padding: 1rem;
   font-weight: bold;
 }
 </style>
